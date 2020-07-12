@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const videoSchema = mongoose.Schema({
     // 필드 정의

@@ -116,7 +116,7 @@ const onDrop = (files) => {
             filePath: FilePath,
             category: Category,
             duration: Duration,
-            tumbnail: ThumbnailPath
+            thumbnail: ThumbnailPath
         }
         Axios.post('/api/video/uploadVideo', variables)
             .then(response =>{

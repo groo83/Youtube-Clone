@@ -30,7 +30,17 @@ const upload = multer({ storage : storage}).single("file");
 //=================================
 //             Video
 //=================================
+// ※post 가아닌 get 메소드
+router.get('/getVideos', (req, res) => {
 
+    // 비디오를 DB에서 가져와서 클라이언트로 전달
+   Video.find() // populate로 모든 비디오 writer 가져옴
+        .populate('writer')
+        .exec((err, videos)=>{
+            if(err) return res.status(400).send(err)
+            res.status(200).json({success:true,videos})
+        })
+})
 // 클라이언트에서 request 보내면 서버의 index.js로 도착한다.
 router.post('/uploadfiles', (req, res) => {
 
@@ -97,5 +107,8 @@ router.post('/thumbnail', (req, res) => {
         });
 
 })
+
+
+
 
 module.exports = router;
