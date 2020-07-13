@@ -53,7 +53,16 @@ router.post('/uploadfiles', (req, res) => {
         return res.json({ success: true, url: res.req.file.path,fileName:res.req.file.filename})
     })
 })
+// 비디오 상세화면
+router.post('/getVideoDetail', (req, res) => {
 
+    Video.findOne({"_id" : req.body.videoId})
+        .populate('writer') //populate로 이용자모든정보가져옴
+        .exec((err, videoDetail)=>{
+            if(err) return res.status(400).send(err)
+            res.status(200).json({success:true, videoDetail})
+        })
+})
 // 비디오 저장
 router.post('/uploadVideo', (req, res) => {
 
@@ -66,6 +75,7 @@ router.post('/uploadVideo', (req, res) => {
         res.status(200).json({success: true})
     })
 })
+
 
 router.post('/thumbnail', (req, res) => {
 
