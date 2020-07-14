@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react'
 import {Row, Col,List, Avatar} from 'antd'
 import Axios from 'axios'
-
+import SideVideo from './Sections/SideVideo'
 export default function VideoDetailPage(props) {
     
     // db에서 정보가져옴
@@ -47,7 +47,7 @@ export default function VideoDetailPage(props) {
                 </Col>
                 <Col lg={6} xs={24}>
 
-                    {/* <SideVideo /> */}
+                    <SideVideo />
 
                 </Col>
             </Row>
