@@ -2,6 +2,8 @@ import React, { useEffect,useState } from 'react'
 import {Row, Col,List, Avatar} from 'antd'
 import Axios from 'axios'
 import SideVideo from './Sections/SideVideo'
+import Subscribe from './Sections/Subscribe'
+// import { Video } from '../../../../../server/models/Subscriber'
 export default function VideoDetailPage(props) {
     
     // db에서 정보가져옴
@@ -31,7 +33,7 @@ export default function VideoDetailPage(props) {
                     <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls></video>
 
                     <List.Item
-                        actions 
+                        actions={[<Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>]}
                     >
                             <List.Item.Meta
                                 avatar={<Avatar src={VideoDetail.writer.image} />}
