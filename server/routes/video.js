@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-
-
-const { auth } = require("../middleware/auth");
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
+
+const { auth } = require("../middleware/auth");
 const {Video} = require('../models/Video');
+const {Subscriber} = require('../models/Subscriber');
 
 // config option
 let storage = multer.diskStorage({
@@ -77,6 +77,7 @@ router.post('/uploadVideo', (req, res) => {
 })
 
 
+
 router.post('/thumbnail', (req, res) => {
 
     // 썸네일 생성하고 비디오 러닝타임 가져오기
@@ -118,7 +119,31 @@ router.post('/thumbnail', (req, res) => {
 
 })
 
+router.post('/getSubscriptionVideos', (req, res) => {
+    // 계정 아이디로 구독유튜버 찾는다
+    Subscriber.find({'userFrom' : req.body.userFrom})
+        .exec((err, subscriberInfo)=>{
+            if(err) return res.status(400).send(err);
 
+            let subscribedUser =[];
+
+            subscriberInfo.map((subscriber, i) =>{
+                subscribedUser.push(subscriber.userTo);
+            })
+            // 유튜버들의 비디오를 가져옴
+            // 여러유튜버들의 id를 가져와야하므로 기존(req.body.id)과 다르게 mongoDB in메소드사용
+            Video.find({writer:{ $in: subscribedUser }})
+                // writer를이용해 비디오의 모든정보가져옴
+                .populate('writer')
+                .exec((err, videos)=>{
+                    if(err) return res.status(400).send(err);
+                    res.status(200).json({success:true, videos})
+                })
+
+        })
+        
+   
+})
 
 
 module.exports = router;
