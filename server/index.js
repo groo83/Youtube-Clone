@@ -38,6 +38,7 @@ app.use('/api/users', require('./routes/users'));
 // 클라이언트에서 request 보내면 서버의 index.js로 도착하기때문에 route로 연결해주기위해추가
 app.use('/api/video', require('./routes/video'));
 app.use('/api/subscribe', require('./routes/subscribe'));
+app.use('/api/comment', require('./routes/comment'));
 
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client

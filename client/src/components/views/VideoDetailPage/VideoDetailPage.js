@@ -3,6 +3,7 @@ import {Row, Col,List, Avatar} from 'antd'
 import Axios from 'axios'
 import SideVideo from './Sections/SideVideo'
 import Subscribe from './Sections/Subscribe'
+import Comment from './Sections/Comment'
 // import { Video } from '../../../../../server/models/Subscriber'
 export default function VideoDetailPage(props) {
     
@@ -11,6 +12,8 @@ export default function VideoDetailPage(props) {
     const variable = {videoId : videoId}
     //useState
     const [VideoDetail, setVideoDetail] = useState([])
+
+    //const [Comment, setComment] = useState(initialState)
 
     useEffect(()=>{
 
@@ -26,34 +29,36 @@ export default function VideoDetailPage(props) {
     },[])
 
     if(VideoDetail.writer){
-    return (
-        <Row gutter={[16,16]}>
-                <Col lg={18} xs={24}>
-                    <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
-                    <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls></video>
+        const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
+        return (
+            <Row gutter={[16,16]}>
+                    <Col lg={18} xs={24}>
+                        <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
+                        <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls></video>
 
-                    <List.Item
-                        actions={[<Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>]}
-                    >
-                            <List.Item.Meta
-                                avatar={<Avatar src={VideoDetail.writer.image} />}
-                                title={VideoDetail.writer.name}
-                                description={VideoDetail.description}
-                            />
-                            
-                    </List.Item>
+                        <List.Item
+                            actions={[ subscribeButton ]}
+                        >
+                                <List.Item.Meta
+                                    avatar={<Avatar src={VideoDetail.writer.image} />}
+                                    title={VideoDetail.writer.name}
+                                    description={VideoDetail.description}
+                                />
+                                
+                        </List.Item>
 
-                          {/* Comments   */}
+                            {/* Comments   */}
+                            <Comment postId={videoId}/>
 
-                    </div> 
-                </Col>
-                <Col lg={6} xs={24}>
+                        </div> 
+                    </Col>
+                    <Col lg={6} xs={24}>
 
-                    <SideVideo />
+                        <SideVideo />
 
-                </Col>
-            </Row>
-        )
+                    </Col>
+                </Row>
+            )
     }
     else{
         return(
