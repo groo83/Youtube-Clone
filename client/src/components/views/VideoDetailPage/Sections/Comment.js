@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {useSelector} from  'react-redux';
 import Axios from 'axios';
-
+import SingleComment from './SingleComment'
 function Comment(props) {
     const videoId = props.postId //url 에서가져옴
 
@@ -49,8 +49,8 @@ function Comment(props) {
                 )
             ))} */}
 
-
-
+            {/* Comment Lists */}
+            <SingleComment postId={props.videoId}/>
             {/* Root Comment Form */}
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>
                 <textarea 
