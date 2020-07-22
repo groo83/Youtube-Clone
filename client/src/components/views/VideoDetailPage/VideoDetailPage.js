@@ -12,7 +12,7 @@ export default function VideoDetailPage(props) {
     const variable = {videoId : videoId}
     //useState
     const [VideoDetail, setVideoDetail] = useState([])
-
+    const [Comments, setComments] = useState([])
     //const [Comment, setComment] = useState(initialState)
 
     useEffect(()=>{
@@ -26,7 +26,24 @@ export default function VideoDetailPage(props) {
                     alert('비디오 가져오기를 실패했습니다.')
                 }
             })
+
+            Axios.post('/api/comment/getComments', variable)
+                .then(response =>{
+                    if(response.data.success){
+                        setComments(response.data.comments)
+                        console.log(response.data.comments)
+                    }else{
+                        alert('코멘트 정보를 가져오는 것을  실패했습니다.')
+                    }
+            })
+
     },[])
+
+    // comment submit시 댓글목록에 반영되도록
+    const refreshFunc = (newComment) => {
+        setComments(Comments.concat(newComment))
+    }
+
 
     if(VideoDetail.writer){
         const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
@@ -48,7 +65,7 @@ export default function VideoDetailPage(props) {
                         </List.Item>
 
                             {/* Comments   */}
-                            <Comment postId={videoId}/>
+                            <Comment refreshFunc={refreshFunc} commentList={Comments} postId={videoId}/>
 
                         </div> 
                     </Col>

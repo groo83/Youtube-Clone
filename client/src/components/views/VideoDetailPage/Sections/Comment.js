@@ -26,6 +26,8 @@ function Comment(props) {
             .then(response=>{
                 if(response.data.success){
                     console.log(response.data.result);
+                    props.refreshFunc(response.data.result)
+                    setcommmetValue("")
                 }else{
                     alert('코멘트를 저장하지 못했습니다.')
                 }
@@ -37,20 +39,14 @@ function Comment(props) {
             <br />
             <p> Replies</p>
             <hr />
-            {/* Comment Lists  */}
-            {/* {console.log(props.CommentLists)} */}
-
-            {/* {props.CommentLists && props.CommentLists.map((comment, index) => (
-                (!comment.responseTo &&
-                    <React.Fragment>
-                        <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
-                        <ReplyComment CommentLists={props.CommentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} />
-                    </React.Fragment>
-                )
-            ))} */}
-
+            
             {/* Comment Lists */}
-            <SingleComment postId={props.videoId}/>
+            {/* commentList가 있으면 =>  props.commentLists &&*/}
+            {props.commentList && props.commentList.map((comment, index) => (
+                (!comment.resposeTo &&
+                    <SingleComment refreshFunc={props.refreshFunc} comment={comment} postId={props.videoId}/>
+                )
+            ))} 
             {/* Root Comment Form */}
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>
                 <textarea 
