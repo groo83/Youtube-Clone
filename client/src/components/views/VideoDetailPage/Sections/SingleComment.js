@@ -14,7 +14,7 @@ function SingleComment(props) {
         setOpenReply(!OpenReply)
     }
     const onHandelChange = (event) =>{
-        setCommentValue(event.currentTarget.CommentValue)
+        setCommentValue(event.currentTarget.value)
     }
     const onSubmit=(event)=>{
         event.preventDefault();
@@ -31,6 +31,7 @@ function SingleComment(props) {
                     console.log(response.data.result);
                     props.refreshFunc(response.data.result)
                     setCommentValue("")
+                    setOpenReply(false)
                 }else{
                     alert('코멘트를 저장하지 못했습니다.')
                 }
