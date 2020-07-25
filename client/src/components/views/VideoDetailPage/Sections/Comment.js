@@ -42,9 +42,10 @@ function Comment(props) {
             <hr />
             
             {/* Comment Lists */}
+            {console.log(props.commentList)}
             {/* commentList가 있으면 =>  props.commentLists &&*/}
             {props.commentList && props.commentList.map((comment, index) => (
-                (!comment.responseTo &&
+                (!comment.responseTo &&// jsx는 React.Fragment로 감싸줘야함
                     <React.Fragment>
                         <SingleComment refreshFunc={props.refreshFunc} comment={comment} postId={videoId}/>
                         <ReplyComment refreshFunc={props.refreshFunc} parentCommentId={comment._id} postId={videoId} commentList ={props.commentList}/>

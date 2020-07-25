@@ -22,8 +22,8 @@ function SingleComment(props) {
         const variables={
             content: CommentValue,
             writer: user.userData._id, //redux store 이용
-            postId: props.videoId
-            ,reponseTo:  props.comment._id
+            postId: props.postId, //videoid에서 postid로 변경
+            responseTo:  props.comment._id // ※ reponseTo 오타에러 db에 저장안됨.
         }
         Axios.post('/api/comment/saveComment',variables)
             .then(response=>{

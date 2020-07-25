@@ -9,7 +9,8 @@ function ReplyComment(props) {
         props.commentList.map((comment) => {
             if(comment.responseTo === props.parentCommentId) commentNumber++
         })
-
+        // 07.25 자식댓글안보여서 추가
+        setChildCommentNumber(commentNumber)
     }, [props.commentList])// ,[]면 dom초기 로드될때만 실행됨.
 
     let renderReplyComment = (parentCommentId)=>
