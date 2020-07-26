@@ -11,7 +11,7 @@ const likeSchema = mongoose.Schema({
         type:Schema.Types.ObjectId,
         ref:'Comment'
     },
-    videoID:{
+    videoId:{ //videoID 오타
         type:Schema.Types.ObjectId,
         ref:'Video'
     }

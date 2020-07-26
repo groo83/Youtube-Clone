@@ -9,6 +9,7 @@ function LikeDislikes(props) {
     const [LikeAction, setLikeAction] = useState(null)
     const [Dislikes, setDislikes] = useState(0)
     const [DislikeAction, setDislikeAction] = useState(null)
+    console.log(props)
     if(props.video){
         variable ={videoId: props.videoId, userId: props.userId}
     }else{
@@ -20,6 +21,7 @@ function LikeDislikes(props) {
        
         Axios.post('/api/like/getLikes', variable)
             .then(response =>{
+                console.log('getLikes',response.data)
                 if(response.data.success){
                     // 비디오 좋아요 숫자 get
                     setLikes(response.data.likes.length)
@@ -35,6 +37,7 @@ function LikeDislikes(props) {
             })
             Axios.post('/api/like/getDislikes', variable)
             .then(response =>{
+                console.log('getDislike',response.data)
                 if(response.data.success){
                     // 비디오 싫어요 숫자 get
                     setDislikes(response.data.dislikes.length)
@@ -59,8 +62,8 @@ function LikeDislikes(props) {
                         setLikeAction('liked')
                         // Dislike 클릭이 되어있다면
                         if(DislikeAction !==null) {
+                            setDislikes(Dislikes -1) 
                             setDislikeAction(null)
-                            setDislikes(Dislikes -1)
                         }
                     }else{
                         alert('Like를 올리지 못했습니다.')
@@ -85,6 +88,7 @@ function LikeDislikes(props) {
         if(DislikeAction !== null){
             Axios.post('/api/like/unDislike', variable)
                 .then(response =>{
+                    console.log('unDislike'+response)
                     if(response.data.success){
                         setDislikes(Dislikes - 1)
                         setDislikeAction(null)
@@ -97,11 +101,11 @@ function LikeDislikes(props) {
             .then(response=>{
                 if(response.data.success){
                     setDislikes(Dislikes + 1)
-                    setDislikes('disliked')
+                    setDislikeAction('disliked')
                     // Like 클릭이 되어있다면
                     if(LikeAction !==null) {
-                        setLikeAction(null)
                         setLikes(Likes -1)
+                        setLikeAction(null)
                     }
                 }else{
                     alert('Dislike를 올리지 못했습니다.')
@@ -111,7 +115,8 @@ function LikeDislikes(props) {
     }
 
     return (
-        <div>
+        <React.Fragment>
+            {/* <div> */}
             <span key="comment-basic-like">
                 <Tooltip title="Like">
                     <Icon type="like"
@@ -120,7 +125,7 @@ function LikeDislikes(props) {
                     />
                 </Tooltip>
                 <span style={{ paddingLeft: '8px', cursor: 'auto' }}> {Likes}   </span>
-            </span>
+            </span>&nbsp;&nbsp;
 
             <span key="comment-basic-dislike">
                 <Tooltip title="Dislike">
@@ -131,7 +136,8 @@ function LikeDislikes(props) {
                 </Tooltip>
                 <span style={{ paddingLeft: '8px', cursor: 'auto' }}> {Dislikes}</span>
             </span>
-        </div>
+        {/* </div> */}
+        </React.Fragment>
     )
 }
 

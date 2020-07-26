@@ -3,6 +3,8 @@ import {useSelector} from  'react-redux';
 import Axios from 'axios';
 import SingleComment from './SingleComment'
 import ReplyComment from './ReplyComment'
+import { Button, Input } from 'antd';
+const { TextArea } = Input;
 function Comment(props) {
     const videoId = props.postId //url 에서가져옴
 
@@ -54,14 +56,14 @@ function Comment(props) {
             ))} 
             {/* Root Comment Form */}
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>
-                <textarea 
+                <TextArea 
                     style={{ width: '100%', borderRadius: '5px' }}
                     onChange={handleClick}
                     value={commmetValue}
                     placeholder="write some comments"
                 />
                 <br />
-                <button style={{ width: '20%', height: '52px' }} onClick ={onSubmit}>Submit</button>
+                <Button style={{ width: '20%', height: '52px' }} onClick ={onSubmit}>Submit</Button>
             </form>
 
         </div>

@@ -52,14 +52,15 @@ router.post('/getDislikes', (req, res) => {
      const like = new Like(variable)
      like.save((err,likeResult)=>{
         if(err) return res.json({success:false},err)
-     })
 
-     // 2.만약 DisLike이 이미 클릭되어있다면 Dislike의 1을 줄여준다 (취소)
-     Dislike.findByIdAndDelete(variable) 
+        // 2.만약 DisLike이 이미 클릭되어있다면 Dislike의 1을 줄여준다 (취소)
+        Dislike.findOneAndDelete(variable) 
         .exec((err, dislikeResult)=>{
             if(err) return res.status(400).json({success:false,err})
             res.status(200).json({success:true})
         })
+
+    })
  });
 
  router.post('/unLike', (req, res) => {
@@ -71,7 +72,7 @@ router.post('/getDislikes', (req, res) => {
      }
     
      // save한것을 없애줌
-     Like.findByIdAndDelete(variable) //  ◇ vs findOneAndDelete?
+     Like.findOneAndDelete(variable) //  ◇ vs findByIdAndDelete?
         .exec((err, result)=>{
             if(err) return res.status(400).json({success:false,err})
             res.status(200).json({success:true})
@@ -87,7 +88,7 @@ router.post('/getDislikes', (req, res) => {
     }
    
     // save한것을 없애줌
-    Disike.findByIdAndDelete(variable) //  ◇ vs findOneAndDelete?
+    Dislike.findOneAndDelete(variable) //  ◇ vs findOneAndDelete?
        .exec((err, result)=>{
            if(err) return res.status(400).json({success:false,err})
            res.status(200).json({success:true})
@@ -106,13 +107,14 @@ router.post('/upDislike', (req, res) => {
      const dislike = new Dislike(variable)
      dislike.save((err,dislikeResult)=>{
         if(err) return res.json({success:false},err)
-     })
+     
 
-     // 2.만약 Like이 이미 클릭되어있다면 Dislike의 1을 줄여준다 (취소)
-     Like.findByIdAndDelete(variable) 
+         // 2.만약 Like이 이미 클릭되어있다면 Dislike의 1을 줄여준다 (취소)
+         Like.findOneAndDelete(variable) 
         .exec((err, likeResult)=>{
             if(err) return res.status(400).json({success:false,err})
             res.status(200).json({success:true})
         })
+    })
  });
 module.exports = router;
