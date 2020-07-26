@@ -15,8 +15,7 @@ const likeSchema = mongoose.Schema({
         type:Schema.Types.ObjectId,
         ref:'Video'
     }
-    // 비디오
-    // 댓글
+    
 }, { timestamps: true })
 
 const Like = mongoose.model('Like', likeSchema);

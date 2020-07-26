@@ -4,6 +4,7 @@ import Axios from 'axios'
 import SideVideo from './Sections/SideVideo'
 import Subscribe from './Sections/Subscribe'
 import Comment from './Sections/Comment'
+import LikeDislikes from './Sections/LikeDislikes'
 // import { Video } from '../../../../../server/models/Subscriber'
 export default function VideoDetailPage(props) {
     
@@ -54,7 +55,7 @@ export default function VideoDetailPage(props) {
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls></video>
 
                         <List.Item
-                            actions={[ subscribeButton ]}
+                            actions={[<LikeDislikes video videoId={videoId} userId={localStorage.getItem('userId')}/>, subscribeButton ]}
                         >
                                 <List.Item.Meta
                                     avatar={<Avatar src={VideoDetail.writer.image} />}
